@@ -9,6 +9,7 @@ if(!isset($_SESSION['verificar'])) {
     header("Location: index.php");
     exit;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +45,7 @@ if(!isset($_SESSION['verificar'])) {
     <h2>Seleccionar Juego</h2>
     <ul class="games-list">
         <li><a href="gato.php">Tres en Raya (Gato)</a></li>
-        <li><a href="cuatro_en_linea.php" id="link_4_en_linea">Cuatro en Línea</a></li>
+        <li><a href="Menu_4_Rayas.php" id="link_4_en_linea">Cuatro en Línea</a></li>
         <li><a href="ahorcado.php">Ahorcado</a></li>
     </ul>
 </div>
