@@ -1,5 +1,8 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 // Verificar si el usuario está autenticado, si no, redirigirlo a la página de inicio de sesión
 if(!isset($_SESSION['verificar'])) {
@@ -20,7 +23,10 @@ if(!isset($_SESSION['verificar'])) {
 <nav class="navbar">
     <div class="navbar-left">
         <?php
-            session_start();
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+           
             if(isset($_SESSION['verificar']) && $_SESSION['verificar']){
                 echo '<span class="user-info">' . $_SESSION['user'] . '</span>';
             }
@@ -37,11 +43,11 @@ if(!isset($_SESSION['verificar'])) {
 <div class="container">
     <h2>Seleccionar Juego</h2>
     <ul class="games-list">
-        <li><a href="tres_en_raya.php">Tres en Raya (Gato)</a></li>
-        <li><a href="cuatro_en_linea.php">Cuatro en Línea</a></li>
+        <li><a href="gato.php">Tres en Raya (Gato)</a></li>
+        <li><a href="cuatro_en_linea.php" id="link_4_en_linea">Cuatro en Línea</a></li>
         <li><a href="ahorcado.php">Ahorcado</a></li>
     </ul>
 </div>
-
+<script src="js/4enlinea.js"></script>
 </body>
 </html>
