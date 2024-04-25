@@ -22,7 +22,7 @@ if(!isset($_SESSION['verificar'])) {
 <body>
     
     <div id="ContenedorModoJuego">
-    <li><a href="cuatro_en_linea_verificar2jugador.php"> Jugar con dos jugadores</a></li>
+    <li><a href="cuatro_en_linea2c2.php"> Jugar con dos jugadores</a></li>
     <li><a href="cuatro_en_lineaMaquina.php" >Jugar con Maquina</a></li>
     </div>
 
