@@ -5,13 +5,13 @@ function actualizarEstadisticas($usuario_id, $resultado, $mysqli) {
     // Actualizar las estadísticas según el resultado de la partida
     switch ($resultado) {
         case 'ganada':
-            $sql = "UPDATE estadisticas SET P_Ganadas = P_Ganadas + 1 WHERE Id_usuario = $usuario_id";
+            $sql = "UPDATE estadisticas SET P_Ganadas_tresEnLinea = P_Ganadas_tresEnLinea + 1 WHERE Id_usuario = $usuario_id";
             break;
         case 'perdida':
-            $sql = "UPDATE estadisticas SET P_Perdidas = P_Perdidas + 1 WHERE Id_usuario = $usuario_id";
+            $sql = "UPDATE estadisticas SET P_Perdidas_tresEnLinea = P_Perdidas_tresEnLinea + 1 WHERE Id_usuario = $usuario_id";
             break;
         case 'empatada':
-            $sql = "UPDATE estadisticas SET P_Empatadas = P_Empatadas + 1 WHERE Id_usuario = $usuario_id";
+            $sql = "UPDATE estadisticas SET P_Empatadas_tresEnLinea = P_Empatadas_tresEnLinea + 1 WHERE Id_usuario = $usuario_id";
             break;
         default:
             // Resultado no válido

@@ -12,7 +12,7 @@ if(!isset($_SESSION['verificar'])) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Seleccionar Juego</title>
+    <title>Seleccionar Modo</title>
     <link rel="stylesheet" href="css/styleSeleccionarJuego.css"> <!-- Enlazar el archivo CSS -->
 </head>
 <body>
@@ -35,11 +35,10 @@ if(!isset($_SESSION['verificar'])) {
 </nav>
 
 <div class="container">
-    <h2>Seleccionar Juego</h2>
+    <h2>Seleccionar Modo de Juego</h2>
     <ul class="games-list">
-        <li><a href="menuTresEnLinea.php">Tres en Raya (Gato)</a></li>
-        <li><a href="cuatro_en_linea.php">Cuatro en Línea</a></li>
-        <li><a href="ahorcado.php">Ahorcado</a></li>
+        <li><a href="tres_en_raya.php">Contra Jugador</a></li>
+        <li><a href="tres_en_rayaCPU.php">Contra CPU</a></li>
     </ul>
 </div>
 
