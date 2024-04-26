@@ -16,11 +16,14 @@ if(!isset($_SESSION['verificar'])) {
 </head>
 <body>
     
-    
+    <h1>CUATRO EN LINEA</h1>
+    <div id=contenedor>
     <table id="Tablero">
         
-    </table>
-   
+        </table>
+       
+    </div>
+  
     
    
 </body>

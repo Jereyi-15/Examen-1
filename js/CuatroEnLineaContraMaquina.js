@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             board.appendChild(fila);
         }
+
     }
     
 
@@ -82,19 +83,15 @@ document.addEventListener('DOMContentLoaded', () => {
             nuevaCelda.classList.add(`jugador${jugadorActual}`);
 
             if (checkForWin(columnaActual, filaSeleccionada, jugadorActual)) {
+               if(jugadorActual===1){
                 termino = true;
                 alert(`¡Jugador ${jugadorActual} ha ganado!`);
-                $.ajax({
-                    type: 'POST',
-                    url: '../AgregarEstadistica.php',
-                    data: { dato: jugadorActual },
-                    success: function(response) {
-                        console.log('Respuesta del servidor:', response);
-                    },
-                    error: function() {
-                        console.error('Error al enviar datos a PHP');
-                    }
-                });
+                guardarResultado('ganada');
+               }else{
+                termino = true;
+                alert(`¡Jugador ${jugadorActual} ha ganado!`);
+                guardarResultado('perdida');
+               }
 
             } else {
                 jugadorActual = jugadorActual === 1 ? 2 : 1; // Cambiar al siguiente jugador mediante este if raro
@@ -135,6 +132,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-   
+    function guardarResultado(resultado) {
+        var userId = $('#save-button').data('user-id');
+        $.post('procesos/guardar_partida.php', { user_id: userId, resultado: resultado })
+            .done(function(data) {
+                // Manejar la respuesta si es necesario
+                console.log(data);
+                alert("¡Partida guardada exitosamente!");
+                location.reload(); // Recargar la página después de guardar el resultado
+            })
+            .fail(function() {
+                // Manejar cualquier error
+                console.error("Error al intentar guardar la partida");
+                alert("Error al intentar guardar la partida. Por favor, inténtalo de nuevo más tarde.");
+            });
+    }
+    
     
 });
