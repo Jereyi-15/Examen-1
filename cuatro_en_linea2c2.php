@@ -29,7 +29,7 @@ if(!isset($_SESSION['verificar'])) {
                 session_start();
             }
             if(isset($_SESSION['verificar']) && $_SESSION['verificar']){
-                echo '<span class="user-info">' . $_SESSION['user'] . '</span>';
+                '<span class="user-info">' . $_SESSION['user'] . '</span>';
             }
         ?>
     </div>
@@ -40,8 +40,8 @@ if(!isset($_SESSION['verificar'])) {
     <div id=contenedor>
     <table id="Tablero"></table>
     <button id="save-button" data-user-id="<?php echo isset($_SESSION['id']) ? $_SESSION['id'] : 'null'; ?>" onclick="guardarResultado()"></button>
-    <div id="turno">Turno del jugador: Rojo</div>
+   
     </div>
-    
+    <div id="turno">Turno del jugador: Rojo</div>
 </body>
 </html>

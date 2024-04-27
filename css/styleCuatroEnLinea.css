@@ -93,3 +93,17 @@ body{
 #save-button{
     display: none;
 }
+#turno{
+    font-size: 16px;
+    margin-bottom: 20px;
+    font-size: 48px;
+    padding: 20px 40px;
+    border-radius: 50px; 
+    color: white; 
+    background-image: linear-gradient(to right, #007bff, #ff0000); 
+    background-clip: text; 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    text-align: center;
+    margin-bottom: 20px
+}

@@ -1,5 +1,8 @@
 <?php
-session_start();
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Verificar si el usuario está autenticado, si no, redirigirlo a la página de inicio de sesión
 if(!isset($_SESSION['verificar'])) {

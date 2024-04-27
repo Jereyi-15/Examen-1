@@ -22,7 +22,11 @@ if (!isset($_SESSION['verificar']) || !$_SESSION['verificar']) {
 <nav class="navbar">
     <div class="navbar-left">
         <?php
+        
+        if (session_status() === PHP_SESSION_NONE) {
             session_start();
+        }
+            
             if(isset($_SESSION['verificar']) && $_SESSION['verificar']){
                 echo '<span class="user-info">' . $_SESSION['user'] . '</span>';
             }

@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cantidad_columnas = 7;
     let termino = false;
     let jugadorActual = 1;
-    let Ganadas=1;
-    let perdidas=0;
+   
    let turnoDisplay = document.getElementById('turnoDisplay'); 
     function crearTablero() {
         for (let i = 0; i < cantidad_filas; i++) {
@@ -106,9 +105,17 @@ document.addEventListener('DOMContentLoaded', () => {
                }
 
             } else {
-                jugadorActual = jugadorActual === 1 ? 2 : 1; // Cambiar al siguiente jugador mediante este if raro
-                if(jugadorActual===2){maquina();
-                actualizarTurnoDisplay(); }
+                if (tableroLleno()) {
+                    termino = true;
+                    alert("¡El juego terminó en empate!");
+                    guardarResultado('empate');
+                } else {
+                    actualizarTurnoDisplay();
+                    jugadorActual = jugadorActual === 1 ? 2 : 1; // Cambiar al siguiente jugador mediante este if raro
+                    if(jugadorActual===2){maquina();
+                    actualizarTurnoDisplay(); }
+                }
+                
              
             }
             
@@ -159,8 +166,15 @@ document.addEventListener('DOMContentLoaded', () => {
             termino = true;
             alert(`¡La máquina ha ganado!`);
         } else {
-            jugadorActual = 1; // Cambiar al jugador humano
-            actualizarTurnoDisplay(); // Actualizar el turno en el display
+            if (tableroLleno()) {
+                termino = true;
+                alert("¡El juego terminó en empate!");
+                guardarResultado('empate');
+            } else {
+                jugadorActual = 1;
+                actualizarTurnoDisplay();
+            }
+           
         }
     }
 
@@ -247,6 +261,15 @@ document.addEventListener('DOMContentLoaded', () => {
     
         return puntaje;
     }
-
+    function tableroLleno() {
+        const celdas = board.querySelectorAll('td');
+        for (let celda of celdas) {
+            if (!celda.classList.contains('jugador1') && !celda.classList.contains('jugador2')) {
+                return false; // Todavía hay celdas vacías, el tablero no está lleno
+            }
+        }
+        // Si llega hasta aquí, todas las celdas están ocupadas
+        return true;
+    }
     
 });

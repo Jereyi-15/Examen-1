@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cantidad_columnas = 7;
     let termino = false;
     let jugadorActual = 1;
+    let turnoDisplay=document.getElementById('turno');
     function crearTablero() {
         for (let i = 0; i < cantidad_filas; i++) {
             const fila = document.createElement('tr');
@@ -97,7 +98,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 
             } else {
                 
-                jugadorActual = jugadorActual === 1 ? 2 : 1; // Cambiar al siguiente jugador mediante este if raro
+                if (tableroLleno()) {
+                    termino = true;
+                    alert("¡El juego terminó en empate!");
+                    guardarResultado('empate');
+                } else {
+                    jugadorActual = jugadorActual === 1 ? 2 : 1;
+                    actualizarTurnoDisplay();
+                }
             }
         }
     }
@@ -122,5 +130,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // Agregar el evento click a todas las celdas del tablero
     board.addEventListener('click', eventoCelda);
+    function tableroLleno() {
+        const celdas = board.querySelectorAll('td');
+        for (let celda of celdas) {
+            if (!celda.classList.contains('jugador1') && !celda.classList.contains('jugador2')) {
+                return false; // Todavía hay celdas vacías, el tablero no está lleno
+            }
+        }
+        
+        return true;
+    }
+   
 });
 
