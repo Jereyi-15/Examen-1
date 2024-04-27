@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const cantidad_columnas = 7;
     let termino = false;
     let jugadorActual = 1;
+    const totalCeldas = 42; // Número total de celdas en el tablero
+    let celdasLlenas = 0; // Inicialmente no hay celdas llenas
+
     function crearTablero() {
         for (let i = 0; i < cantidad_filas; i++) {
             const fila = document.createElement('tr');
@@ -68,39 +71,47 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
     }
 
-    function eventoCelda(event) {
-        if (termino) return;
 
-        const celdaSeleccionada = event.target;
-        const columnaActual = parseInt(celdaSeleccionada.dataset.column);
-        const filaSeleccionada = getColumnaVacia(columnaActual);
+// Función para manejar el evento de clic en una celda
+function eventoCelda(event) {
+    if (termino) return;
 
-        if (filaSeleccionada !== -1) {
-            const celdas = board.querySelectorAll(`[data-column="${columnaActual}"]`);
-            const nuevaCelda = celdas[filaSeleccionada];
+    const celdaSeleccionada = event.target;
+    const columnaActual = parseInt(celdaSeleccionada.dataset.column);
+    const filaSeleccionada = getColumnaVacia(columnaActual);
 
-            const color = jugadorActual === 1 ? 'red' : 'blue';
-            nuevaCelda.style.backgroundColor = color;
-            nuevaCelda.classList.add(`jugador${jugadorActual}`);
+    if (filaSeleccionada !== -1) {
+        const celdas = board.querySelectorAll(`[data-column="${columnaActual}"]`);
+        const nuevaCelda = celdas[filaSeleccionada];
 
-            if (checkForWin(columnaActual, filaSeleccionada, jugadorActual)) {
-                termino = true;
-                if(jugadorActual===1){
-                    alert(`¡Jugador ${jugadorActual} ha ganado!`);
-                    guardarResultado('ganada');
-                   
-                }else{
-                    alert(`¡Jugador ${jugadorActual} ha ganado!`);
-                    guardarResultado('perdida');
-                   
-                }
-                
+        // Siempre establecer el color de la celda según el jugador actual
+        const color = jugadorActual === 1 ? 'red' : 'blue';
+        nuevaCelda.style.backgroundColor = color;
+        nuevaCelda.classList.add(`jugador${jugadorActual}`);
+
+        celdasLlenas++; // Incrementar el contador de celdas llenas
+
+        if (checkForWin(columnaActual, filaSeleccionada, jugadorActual)) {
+            termino = true;
+            if (jugadorActual === 1) {
+                alert(`¡Jugador ${jugadorActual} ha ganado!`);
+                guardarResultado('ganadaCuatroEnLinea');
             } else {
-                
-                jugadorActual = jugadorActual === 1 ? 2 : 1; // Cambiar al siguiente jugador mediante este if raro
+                alert(`¡Jugador ${jugadorActual} ha ganado!`);
+                guardarResultado('perdidaCuatroEnLinea');
+            }
+        } else {
+            if (celdasLlenas === totalCeldas) { // Verificar si hay un empate
+                termino = true;
+                alert('¡Empate!');
+                guardarResultado('empatadaCuatroEnLinea');
+            } else {
+                jugadorActual = jugadorActual === 1 ? 2 : 1; // Cambiar al siguiente jugador
             }
         }
     }
+}
+
 
     crearTablero();
    

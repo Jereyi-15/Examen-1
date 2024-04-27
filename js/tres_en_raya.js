@@ -25,9 +25,9 @@ $(document).ready(function() {
             if (tablero[a] !== '' && tablero[a] === tablero[b] && tablero[a] === tablero[c]) {
                 $('#result-message').text(`¡Jugador ${jugadorActual} ha ganado!`);
                 if (jugadorActual === 'X') {
-                    guardarResultado('ganada'); // Llamar a la función guardarResultado con el resultado ganada
+                    guardarResultado('ganadaTresEnRaya'); // Llamar a la función guardarResultado con el resultado ganada
                 } else if (jugadorActual === 'O') {
-                    guardarResultado('perdida'); // Llamar a la función guardarResultado con el resultado perdida
+                    guardarResultado('perdidaTresEnRaya'); // Llamar a la función guardarResultado con el resultado perdida
                 }
                 return true; // Retorna true si hay un ganador
             }
@@ -35,7 +35,7 @@ $(document).ready(function() {
 
         if (tablero.every(celda => celda !== '')) {
             $('#result-message').text('¡Empate!');
-            guardarResultado('empatada'); // Llamar a la función guardarResultado con el resultado empatada
+            guardarResultado('empatadaTresEnRaya'); // Llamar a la función guardarResultado con el resultado empatada
             return true; // Retorna true si hay un empate
         }
 

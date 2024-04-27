@@ -1,3 +1,52 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Estilos del menú */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333; /* Color de fondo del menú */
+    color: #fff; /* Color del texto */
+    padding: 15px 20px; /* Aumentamos el padding para hacerlo más grande */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000; /* Asegura que esté por encima del contenido */
+}
+
+.navbar-left {
+    flex: 1;
+}
+
+.navbar-right ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right ul li {
+    margin-right: 25px; /* Aumentamos el margen derecho */
+}
+
+.navbar-right ul li a {
+    font-size: 18px; /* Aumentamos el tamaño de fuente */
+    color: #fff; /* Color del texto de los enlaces */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navbar-right ul li a:hover {
+    color: #ddd; /* Color del texto de los enlaces al pasar el ratón */
+}
+
 #tablero{
     border-collapse: collapse;
     margin-top: 100px;
