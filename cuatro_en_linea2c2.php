@@ -20,28 +20,32 @@ if(!isset($_SESSION['verificar'])) {
    
 </head>
 <body>
-   
 
-    <header>
-    <div >
-    <?php
-            if (session_status() === PHP_SESSION_NONE) {
-                session_start();
-            }
+<nav class="navbar">
+    <div class="navbar-left">
+        <?php
+            session_start();
             if(isset($_SESSION['verificar']) && $_SESSION['verificar']){
                 '<span class="user-info">' . $_SESSION['user'] . '</span>';
             }
         ?>
     </div>
-    </header>
+    <div class="navbar-right">
+        <ul>
+            <li><a href="Menu_4_Rayas.php">Modo de Juego</a></li>
+			<li><a href="seleccionJuego.php">Inicio</a></li>
+            <li><a href="logout.php">Cerrar sesión</a></li>
+        </ul>
+    </div>
+</nav>
     
      
     <h1>CUATRO EN LINEA</h1>
     <div id=contenedor>
     <table id="Tablero"></table>
     <button id="save-button" data-user-id="<?php echo isset($_SESSION['id']) ? $_SESSION['id'] : 'null'; ?>" onclick="guardarResultado()"></button>
-   
-    </div>
     <div id="turno">Turno del jugador: Rojo</div>
+    </div>
+    
 </body>
 </html>

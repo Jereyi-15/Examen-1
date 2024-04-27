@@ -1,0 +1,145 @@
+.hidden {
+    color: transparent;
+}
+
+body {
+    background-color: hsl(216, 21%, 32%);
+    color: #fff;
+    font-family: "Work Sans", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between; /* Coloca los elementos al extremo izquierdo y derecho */
+    align-items: center;
+}
+
+
+
+/* Estilos para el elemento izquierdo */
+.izq {
+    margin: 50px;
+    order: 1; /* Cambia el orden de aparición a 1 (izquierda) */
+}
+
+/* Estilos para el elemento derecho */
+.der {
+    margin: 50px;
+    order: 2; /* Cambia el orden de aparición a 2 (derecha) */
+}
+
+#wordContainer {
+    margin-top: 20px;
+    font-size: 24px; /* Tamaño de fuente más grande para las letras de la palabra */
+}
+
+#usedLetters {
+    font-size: 24px; /* Tamaño de fuente más grande para las letras usadas */
+}
+
+
+.letter {
+    margin: 0 7px;
+    position: relative;
+    text-align: center;
+}
+
+.letter::after{
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
+    min-width: 12px;
+}
+
+#startButton {
+    margin-top: 20px;
+    appearance: none;
+    font-family: 'SF Pixelate', sans-serif;
+    border: none;
+    width: 300px;
+    padding: 10px;
+    background: hsl(0, 0%, 0%);
+    color: #fff;
+    font-weight: 600;
+    font-size: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.key {
+    margin: 5px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: hsl(17, 60%, 27%);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.key:hover {
+    background-color: #bf4a2b;
+}
+
+.usedLettersContainer {
+    margin-top: 20px;
+    font-size: 24px; /* Tamaño de fuente más grande para las letras usadas */
+    
+    padding: 10px; /* Añade un espacio de relleno */
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333; /* Color de fondo del menú */
+    color: #fff; /* Color del texto */
+    padding: 15px 20px; /* Aumentamos el padding para hacerlo más grande */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000; /* Asegura que esté por encima del contenido */
+}
+
+.navbar-left {
+    flex: 1;
+}
+
+.navbar-right ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right ul li {
+    margin-right: 25px; /* Aumentamos el margen derecho */
+}
+
+.navbar-right ul li a {
+    font-size: 18px; /* Aumentamos el tamaño de fuente */
+    color: #fff; /* Color del texto de los enlaces */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navbar-right ul li a:hover {
+    color: #ddd; /* Color del texto de los enlaces al pasar el ratón */
+}

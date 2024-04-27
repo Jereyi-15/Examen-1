@@ -1,4 +1,46 @@
-body{
+/* Estilos del menú */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333; /* Color de fondo del menú */
+    color: #fff; /* Color del texto */
+    padding: 15px 20px; /* Aumentamos el padding para hacerlo más grande */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000; /* Asegura que esté por encima del contenido */
+}
+
+.navbar-left {
+    flex: 1;
+}
+
+.navbar-right .menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-right .menu .menu-item {
+    margin-right: 25px; /* Aumentamos el margen derecho */
+}
+
+.navbar-right .menu .menu-link {
+    font-size: 18px; /* Aumentamos el tamaño de fuente */
+    color: #fff; /* Color del texto de los enlaces */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navbar-right .menu .menu-link:hover {
+    color: #ddd; /* Color del texto de los enlaces al pasar el ratón */
+}
+
+body {
     display: flex;
     background-image: url(../imagenes/StevenUniverse.gif);
     justify-content: center;
@@ -9,33 +51,33 @@ body{
     height: 100vh; /* Ajusta la altura del cuerpo al 100% del viewport */
     margin: 0; /* Elimina el margen predeterminado */
     padding: 0; /* Elimina el relleno predeterminado */
+}
 
-}
-#formularioJuego{
+
+#formularioJuego {
     margin-top: 200px;
-     display: flex;
-     justify-content: center;
+    display: flex;
+    justify-content: center;
     color: white;
-   
-   margin-bottom: 200px;
-    
-   
+    margin-bottom: 200px;
 }
-form{
+
+form {
     font-size: 20px;
     height: 400px;
     width: 400px;
     display: flex;
-            flex-direction: column; 
-            align-items: center; 
-            padding: 20px;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 200px;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 200px;
 }
-input{
+
+input {
     height: 20px;
     width: 70px;
     margin-left: 20px;
@@ -43,7 +85,8 @@ input{
     margin-right: 20px;
     border-radius: 30px;
 }
-button{
+
+button {
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
@@ -51,50 +94,57 @@ button{
     color: #fff;
     cursor: pointer;
 }
-label, input, button {
+
+label,
+input,
+button {
     margin-bottom: 20px;
 }
-label{
+
+label {
     background-color: purple;
     border-radius: 10px;
 }
-#ContenedorModoJuego{
+
+#ContenedorModoJuego {
     padding: 20px;
     margin-top: 200px;
-  
     height: 300px;
     color: white;
     width: 300px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     border-radius: 10px;
     display: flex;
-    flex-direction: column; 
-    align-items: center;  
-}
-a {
-    margin-top: 70px;
-    color: purple;
-    text-decoration: none; 
-    background-color: white;
-    font-weight: bold; 
-    transition: color 0.3s ease; 
-    padding: 5px 10px; 
-    border-radius: 5px; 
-    font-size: 20px;
-    border: 2px solid purple; 
-    display: inline-block; 
-}
-a:hover {
-    color: #0056b3;
-    border-color: #0056b3; 
+    flex-direction: column;
+    align-items: center;
 }
 
-a:active {
-    color: #003d80; 
-    border-color: #003d80; 
+.active {
+    margin-top: 70px;
+    color: purple;
+    text-decoration: none;
+    background-color: white;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 20px;
+    border: 2px solid purple;
+    display: inline-block;
 }
-h1{
+
+.active:hover {
+    color: #0056b3;
+    border-color: #0056b3;
+}
+
+.active:active {
+    color: #003d80;
+    border-color: #003d80;
+}
+
+h1 {
     color: black;
     font-size: 35px;
-    margin-top:0px;
+    margin-top: 0px;
 }

@@ -27,7 +27,7 @@ if(isset($_POST['id']) && isset($_POST['nombre']) && isset($_POST['apellido']) &
     // Ejecutar la consulta preparada para registrar al usuario
     if($query->execute()) {
         // Insertar una nueva entrada en la tabla de estadísticas para el usuario recién creado
-        $query_insertar_estadisticas = $mysqli->prepare("INSERT INTO estadisticas (Id_usuario, P_Ganadas_tresEnLinea, P_Perdidas_tresEnLinea, P_Empatadas_tresEnLinea) VALUES (?, 0, 0, 0)");
+        $query_insertar_estadisticas = $mysqli->prepare("INSERT INTO estadisticas (Id_usuario, P_Ganadas_tresEnRaya, P_Perdidas_tresEnRaya, P_Empatadas_tresEnRaya, P_Ganadas_cuatroEnLinea, P_Perdidas_cuatroEnLinea, P_Empatadas_cuatroEnLinea, P_Ganadas_ahorcado, P_Perdidas_ahorcado, P_Empatadas_ahorcado) VALUES (?, 0, 0, 0, 0, 0, 0, 0, 0, 0)");
         $query_insertar_estadisticas->bind_param("i", $id);
         
         // Ejecutar la consulta preparada para insertar estadísticas
