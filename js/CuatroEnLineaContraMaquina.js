@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const cantidad_columnas = 7;
     let termino = false;
     let jugadorActual = 1;
-   
+    let Ganadas = 1;
+    let perdidas = 0;
+    let celdasLlenas = 0; // Contador de celdas llenas
    let turnoDisplay = document.getElementById('turnoDisplay'); 
     function crearTablero() {
         for (let i = 0; i < cantidad_filas; i++) {
@@ -17,18 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             board.appendChild(fila);
         }
-
     }
+
     function actualizarTurnoDisplay() {
         const colorTurno = jugadorActual === 1 ? 'Rojo' : 'Azul';
-    
-        if (turnoDisplay) {
-            turnoDisplay.textContent = `Turno del jugador: ${colorTurno}`;
-        } else {
-            console.error("Elemento turnoDisplay no encontrado");
-        }
+        turnoDisplay.textContent = `Turno del jugador: ${colorTurno}`;
     }
-    
 
     function getColumnaVacia(col) {
         const celdas = board.querySelectorAll(`[data-column="${col}"]`);
@@ -41,12 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkForWin(columna, fila, jugador) {
-        const ClasejugadorActual= `jugador${jugador}`;
+        const ClasejugadorActual = `jugador${jugador}`;
 
-        function Verificar4Rayas(NumeroColumna,NumeroFila) {
-             count = 1; 
-             x = columna + NumeroColumna; 
-             y = fila+ NumeroFila; 
+        function Verificar4Rayas(NumeroColumna, NumeroFila) {
+            let count = 1;
+            let x = columna + NumeroColumna;
+            let y = fila + NumeroFila;
 
             //Verifica si las celdas delante de la casilla le pertenecen al mismo jugador
             while (count < 4 && x >= 0 && x < cantidad_columnas && y >= 0 && y < cantidad_filas &&
@@ -57,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             x = columna - NumeroColumna;
             y = fila - NumeroFila;
-              //Verifica si las celdas detras de la casilla le pertenecen al mismo jugador
+            //Verifica si las celdas detras de la casilla le pertenecen al mismo jugador
             while (count < 4 && x >= 0 && x < cantidad_columnas && y >= 0 && y < cantidad_filas &&
                 board.rows[y].cells[x].classList.contains(ClasejugadorActual)) {
                 count++;
@@ -65,14 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 y -= NumeroFila;
             }
 
-            return count >= 4; 
+            return count >= 4;
         }
 
-       
-        if (Verificar4Rayas(1, 0) || Verificar4Rayas(0, 1) ||  Verificar4Rayas(1, 1) ||  Verificar4Rayas(-1, 1)) {
-            return true; 
+        if (Verificar4Rayas(1, 0) || Verificar4Rayas(0, 1) || Verificar4Rayas(1, 1) || Verificar4Rayas(-1, 1)) {
+            return true;
         }
-      
+
         return false;
     }
 
@@ -84,38 +79,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const filaSeleccionada = getColumnaVacia(columnaActual);
 
         if (filaSeleccionada !== -1) {
-          
-        
             const celdas = board.querySelectorAll(`[data-column="${columnaActual}"]`);
             const nuevaCelda = celdas[filaSeleccionada];
 
-            const color = jugadorActual === 1 ? 'red' : 'blue';
-            nuevaCelda.style.backgroundColor = color;
-            nuevaCelda.classList.add(`jugador${jugadorActual}`);
+            // Siempre establecer el color de la celda rojo para el jugador humano
+            nuevaCelda.style.backgroundColor = 'red';
+            nuevaCelda.classList.add('jugador1');
 
-            if (checkForWin(columnaActual, filaSeleccionada, jugadorActual)) {
-               if(jugadorActual===1){
-                termino = true;
-                alert(`¡Jugador ${jugadorActual} ha ganado!`);
-                guardarResultado('ganada');
-               }else{
-                termino = true;
-                alert(`¡Jugador ${jugadorActual} ha ganado!`);
-                guardarResultado('perdida');
-               }
+            celdasLlenas++; // Incrementar el contador de celdas llenas
 
+            if (checkForWin(columnaActual, filaSeleccionada, 1)) {
+                termino = true;
+                alert(`¡Jugador humano ha ganado!`);
+                guardarResultado('ganadaCuatroEnLinea');
             } else {
-                if (tableroLleno()) {
-                    termino = true;
-                    alert("¡El juego terminó en empate!");
-                    guardarResultado('empate');
-                } else {
-                    actualizarTurnoDisplay();
-                    jugadorActual = jugadorActual === 1 ? 2 : 1; // Cambiar al siguiente jugador mediante este if raro
-                    if(jugadorActual===2){maquina();
-                    actualizarTurnoDisplay(); }
-                }
-                
+                jugadorActual = jugadorActual === 1 ? 2 : 1; // Cambiar al siguiente jugador mediante este if raro
+                if(jugadorActual===2){maquina();
+                actualizarTurnoDisplay(); }
              
             }
             
@@ -126,12 +106,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Agregar el evento click a todas las celdas del tablero
     board.addEventListener('click', eventoCelda);
+
     function maquina() {
         if (termino) return;
 
         let mejorColumna = -1;
         let mejorPuntaje = -Infinity;
-    
+
+        // Simular cada posible movimiento y evaluar el tablero resultante
         for (let col = 0; col < cantidad_columnas; col++) {
             const filaVacia = getColumnaVacia(col);
             if (filaVacia !== -1) {
@@ -139,13 +121,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const celdas = board.querySelectorAll(`[data-column="${col}"]`);
                 const nuevaCelda = celdas[filaVacia];
                 nuevaCelda.classList.add('jugador2');
-    
+                nuevaCelda.style.backgroundColor = 'blue'; // Establecer el color azul para la máquina
+
                 // Evaluar el tablero resultante utilizando una función heurística
                 const puntaje = evaluarTablero();
-    
+
                 // Quitar la ficha simulada
                 nuevaCelda.classList.remove('jugador2');
-    
+                nuevaCelda.style.backgroundColor = ''; // Restablecer el color de la celda
+
                 // Actualizar el mejor puntaje y la mejor columna
                 if (puntaje > mejorPuntaje) {
                     mejorPuntaje = puntaje;
@@ -153,28 +137,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-    
+
+        // Verificar si hay un empate antes de que la máquina realice su movimiento
+        if (celdasLlenas === cantidad_filas * cantidad_columnas) {
+            termino = true;
+            alert(`¡Empate!`);
+            guardarResultado('empatadaCuatroEnLinea');
+            return;
+        }
+
         // Colocar la ficha en la mejor columna encontrada
         const filaSeleccionada = getColumnaVacia(mejorColumna);
         const celdas = board.querySelectorAll(`[data-column="${mejorColumna}"]`);
         const nuevaCelda = celdas[filaSeleccionada];
-        nuevaCelda.style.backgroundColor = 'blue'; // Aplicar color azul
+        nuevaCelda.style.backgroundColor = 'blue'; // Establecer el color azul para la máquina
         nuevaCelda.classList.add('jugador2');
-    
-        // Verificar si la máquina ganó
+
         if (checkForWin(mejorColumna, filaSeleccionada, 2)) {
             termino = true;
             alert(`¡La máquina ha ganado!`);
+            guardarResultado('perdidaCuatroEnLinea');
         } else {
-            if (tableroLleno()) {
-                termino = true;
-                alert("¡El juego terminó en empate!");
-                guardarResultado('empate');
-            } else {
-                jugadorActual = 1;
-                actualizarTurnoDisplay();
-            }
-           
+            jugadorActual = 1; // Cambiar al jugador humano
+            actualizarTurnoDisplay(); // Actualizar el turno en el display
         }
     }
 
@@ -194,20 +179,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert("Error al intentar guardar la partida. Por favor, inténtalo de nuevo más tarde.");
             });
     }
+
     function evaluarTablero() {
         let puntajeTotal = 0;
-    
+
         // Evaluar fichas consecutivas para el jugador 1 (rojo)
         puntajeTotal += evaluarFichasConsecutivas(1);
-    
+
         // Evaluar fichas consecutivas para el jugador 2 (azul)
         puntajeTotal -= evaluarFichasConsecutivas(2);
-    
+
         return puntajeTotal;
-    }function evaluarFichasConsecutivas(jugador) {
+    }
+
+    function evaluarFichasConsecutivas(jugador) {
         let puntaje = 0;
         const ClaseJugador = `jugador${jugador}`;
-    
+
         // Horizontalmente
         for (let fila = 0; fila < cantidad_filas; fila++) {
             for (let col = 0; col <= cantidad_columnas - 4; col++) {
@@ -220,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 puntaje += count * count;
             }
         }
-    
+
         // Verticalmente
         for (let col = 0; col < cantidad_columnas; col++) {
             for (let fila = 0; fila <= cantidad_filas - 4; fila++) {
@@ -233,8 +221,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 puntaje += count * count;
             }
         }
-    
-      
+
+
         for (let fila = 0; fila <= cantidad_filas - 4; fila++) {
             for (let col = 0; col <= cantidad_columnas - 4; col++) {
                 let count = 0;
@@ -246,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 puntaje += count * count;
             }
         }
-    
+
         for (let fila = 0; fila <= cantidad_filas - 4; fila++) {
             for (let col = 3; col < cantidad_columnas; col++) {
                 let count = 0;
@@ -258,18 +246,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 puntaje += count * count;
             }
         }
-    
+
         return puntaje;
     }
-    function tableroLleno() {
-        const celdas = board.querySelectorAll('td');
-        for (let celda of celdas) {
-            if (!celda.classList.contains('jugador1') && !celda.classList.contains('jugador2')) {
-                return false; // Todavía hay celdas vacías, el tablero no está lleno
-            }
-        }
-        // Si llega hasta aquí, todas las celdas están ocupadas
-        return true;
-    }
+
     
 });

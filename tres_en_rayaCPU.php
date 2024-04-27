@@ -34,6 +34,7 @@ if (!isset($_SESSION['verificar']) || !$_SESSION['verificar']) {
     </div>
     <div class="navbar-right">
         <ul>
+            <li><a href="menuTresEnLinea.php">Modo de Juego</a></li>
 			<li><a href="seleccionJuego.php">Inicio</a></li>
             <li><a href="logout.php">Cerrar sesión</a></li>
         </ul>
