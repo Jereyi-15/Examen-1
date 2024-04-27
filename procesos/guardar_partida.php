@@ -4,14 +4,23 @@ function actualizarEstadisticas($usuario_id, $resultado, $mysqli) {
 
     // Actualizar las estadísticas según el resultado de la partida
     switch ($resultado) {
-        case 'ganada':
-            $sql = "UPDATE estadisticas SET P_Ganadas_tresEnLinea = P_Ganadas_tresEnLinea + 1 WHERE Id_usuario = $usuario_id";
+        case 'ganadaTresEnRaya':
+            $sql = "UPDATE estadisticas SET P_Ganadas_tresEnRaya = P_Ganadas_tresEnRaya + 1 WHERE Id_usuario = $usuario_id";
             break;
-        case 'perdida':
-            $sql = "UPDATE estadisticas SET P_Perdidas_tresEnLinea = P_Perdidas_tresEnLinea + 1 WHERE Id_usuario = $usuario_id";
+        case 'perdidaTresEnRaya':
+            $sql = "UPDATE estadisticas SET P_Perdidas_tresEnRaya = P_Perdidas_tresEnRaya + 1 WHERE Id_usuario = $usuario_id";
             break;
-        case 'empatada':
-            $sql = "UPDATE estadisticas SET P_Empatadas_tresEnLinea = P_Empatadas_tresEnLinea + 1 WHERE Id_usuario = $usuario_id";
+        case 'empatadaTresEnRaya':
+            $sql = "UPDATE estadisticas SET P_Empatadas_tresEnRaya = P_Empatadas_tresEnRaya + 1 WHERE Id_usuario = $usuario_id";
+            break;
+        case 'ganadaCuatroEnLinea':
+            $sql = "UPDATE estadisticas SET P_Ganadas_cuatroEnLinea = P_Ganadas_cuatroEnLinea + 1 WHERE Id_usuario = $usuario_id";
+            break;
+        case 'perdidaCuatroEnLinea':
+            $sql = "UPDATE estadisticas SET P_Perdidas_cuatroEnLinea = P_Perdidas_cuatroEnLinea + 1 WHERE Id_usuario = $usuario_id";
+            break;
+        case 'empatadaCuatroEnLinea':
+            $sql = "UPDATE estadisticas SET P_Empatadas_cuatroEnLinea = P_Empatadas_cuatroEnLinea + 1 WHERE Id_usuario = $usuario_id";
             break;
         default:
             // Resultado no válido
