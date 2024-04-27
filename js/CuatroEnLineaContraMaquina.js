@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const cantidad_columnas = 7;
     let termino = false;
     let jugadorActual = 1;
+    let Ganadas=1;
+    let perdidas=0;
+   let turnoDisplay = document.getElementById('turnoDisplay'); 
     function crearTablero() {
         for (let i = 0; i < cantidad_filas; i++) {
             const fila = document.createElement('tr');
@@ -16,6 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
             board.appendChild(fila);
         }
 
+    }
+    function actualizarTurnoDisplay() {
+        const colorTurno = jugadorActual === 1 ? 'Rojo' : 'Azul';
+    
+        if (turnoDisplay) {
+            turnoDisplay.textContent = `Turno del jugador: ${colorTurno}`;
+        } else {
+            console.error("Elemento turnoDisplay no encontrado");
+        }
     }
     
 
@@ -95,7 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             } else {
                 jugadorActual = jugadorActual === 1 ? 2 : 1; // Cambiar al siguiente jugador mediante este if raro
-                if(jugadorActual===2){maquina(); }
+                if(jugadorActual===2){maquina();
+                actualizarTurnoDisplay(); }
              
             }
             
@@ -109,31 +122,51 @@ document.addEventListener('DOMContentLoaded', () => {
     function maquina() {
         if (termino) return;
 
-        let columnaAleatoria;
-        let filaSeleccionada;
-
-        do {
-            columnaAleatoria = Math.floor(Math.random() * cantidad_columnas);
-            filaSeleccionada = getColumnaVacia(columnaAleatoria);
-        } while (filaSeleccionada === -1);
-
-        const celdas = board.querySelectorAll(`[data-column="${columnaAleatoria}"]`);
+        let mejorColumna = -1;
+        let mejorPuntaje = -Infinity;
+    
+        for (let col = 0; col < cantidad_columnas; col++) {
+            const filaVacia = getColumnaVacia(col);
+            if (filaVacia !== -1) {
+                // Simular colocar una ficha en esta columna
+                const celdas = board.querySelectorAll(`[data-column="${col}"]`);
+                const nuevaCelda = celdas[filaVacia];
+                nuevaCelda.classList.add('jugador2');
+    
+                // Evaluar el tablero resultante utilizando una función heurística
+                const puntaje = evaluarTablero();
+    
+                // Quitar la ficha simulada
+                nuevaCelda.classList.remove('jugador2');
+    
+                // Actualizar el mejor puntaje y la mejor columna
+                if (puntaje > mejorPuntaje) {
+                    mejorPuntaje = puntaje;
+                    mejorColumna = col;
+                }
+            }
+        }
+    
+        // Colocar la ficha en la mejor columna encontrada
+        const filaSeleccionada = getColumnaVacia(mejorColumna);
+        const celdas = board.querySelectorAll(`[data-column="${mejorColumna}"]`);
         const nuevaCelda = celdas[filaSeleccionada];
-
-        const color = jugadorActual === 1 ? 'red' : 'blue';
-        nuevaCelda.style.backgroundColor = color;
-        nuevaCelda.classList.add(`jugador${jugadorActual}`);
-
-        if (checkForWin(columnaAleatoria, filaSeleccionada, jugadorActual)) {
+        nuevaCelda.style.backgroundColor = 'blue'; // Aplicar color azul
+        nuevaCelda.classList.add('jugador2');
+    
+        // Verificar si la máquina ganó
+        if (checkForWin(mejorColumna, filaSeleccionada, 2)) {
             termino = true;
             alert(`¡La máquina ha ganado!`);
         } else {
-            jugadorActual = jugadorActual === 1 ? 2 : 1; // Cambiar al siguiente jugador
+            jugadorActual = 1; // Cambiar al jugador humano
+            actualizarTurnoDisplay(); // Actualizar el turno en el display
         }
     }
 
     function guardarResultado(resultado) {
         var userId = $('#save-button').data('user-id');
+        console.log(userId);
         $.post('procesos/guardar_partida.php', { user_id: userId, resultado: resultado })
             .done(function(data) {
                 // Manejar la respuesta si es necesario
@@ -147,6 +180,73 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert("Error al intentar guardar la partida. Por favor, inténtalo de nuevo más tarde.");
             });
     }
+    function evaluarTablero() {
+        let puntajeTotal = 0;
     
+        // Evaluar fichas consecutivas para el jugador 1 (rojo)
+        puntajeTotal += evaluarFichasConsecutivas(1);
+    
+        // Evaluar fichas consecutivas para el jugador 2 (azul)
+        puntajeTotal -= evaluarFichasConsecutivas(2);
+    
+        return puntajeTotal;
+    }function evaluarFichasConsecutivas(jugador) {
+        let puntaje = 0;
+        const ClaseJugador = `jugador${jugador}`;
+    
+        // Horizontalmente
+        for (let fila = 0; fila < cantidad_filas; fila++) {
+            for (let col = 0; col <= cantidad_columnas - 4; col++) {
+                let count = 0;
+                for (let k = 0; k < 4; k++) {
+                    if (board.rows[fila].cells[col + k].classList.contains(ClaseJugador)) {
+                        count++;
+                    }
+                }
+                puntaje += count * count;
+            }
+        }
+    
+        // Verticalmente
+        for (let col = 0; col < cantidad_columnas; col++) {
+            for (let fila = 0; fila <= cantidad_filas - 4; fila++) {
+                let count = 0;
+                for (let k = 0; k < 4; k++) {
+                    if (board.rows[fila + k].cells[col].classList.contains(ClaseJugador)) {
+                        count++;
+                    }
+                }
+                puntaje += count * count;
+            }
+        }
+    
+      
+        for (let fila = 0; fila <= cantidad_filas - 4; fila++) {
+            for (let col = 0; col <= cantidad_columnas - 4; col++) {
+                let count = 0;
+                for (let k = 0; k < 4; k++) {
+                    if (board.rows[fila + k].cells[col + k].classList.contains(ClaseJugador)) {
+                        count++;
+                    }
+                }
+                puntaje += count * count;
+            }
+        }
+    
+        for (let fila = 0; fila <= cantidad_filas - 4; fila++) {
+            for (let col = 3; col < cantidad_columnas; col++) {
+                let count = 0;
+                for (let k = 0; k < 4; k++) {
+                    if (board.rows[fila + k].cells[col - k].classList.contains(ClaseJugador)) {
+                        count++;
+                    }
+                }
+                puntaje += count * count;
+            }
+        }
+    
+        return puntaje;
+    }
+
     
 });

@@ -20,6 +20,8 @@ function actualizarEstadisticas($usuario_id, $resultado, $mysqli) {
 
     // Ejecutar la consulta
     if ($mysqli->query($sql) === TRUE) {
+        echo $usuario_id;
+
         echo "Estadísticas actualizadas correctamente";
     } else {
         echo "Error al actualizar las estadísticas: " . $mysqli->error;
@@ -41,5 +43,3 @@ if (isset($_POST['resultado']) && isset($_POST['user_id'])) {
     $mysqli->close();
 }
 ?>
-
-

@@ -27,6 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return -1;
     }
+    function actualizarTurnoDisplay() {
+        const colorTurno = jugadorActual === 1 ? 'Rojo' : 'Azul';
+        turnoDisplay.textContent = `Turno del jugador: ${colorTurno}`;
+    }
 
     function checkForWin(columna, fila, jugador) {
         const ClasejugadorActual= `jugador${jugador}`;
@@ -81,15 +85,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (checkForWin(columnaActual, filaSeleccionada, jugadorActual)) {
                 termino = true;
-                alert(`¡Jugador ${jugadorActual} ha ganado!`);
+                if(jugadorActual===1){
+                    alert(`¡Jugador ${jugadorActual} ha ganado!`);
+                    guardarResultado('ganada');
+                   
+                }else{
+                    alert(`¡Jugador ${jugadorActual} ha ganado!`);
+                    guardarResultado('perdida');
+                   
+                }
+                
             } else {
+                
                 jugadorActual = jugadorActual === 1 ? 2 : 1; // Cambiar al siguiente jugador mediante este if raro
             }
         }
     }
 
     crearTablero();
-
+   
+    function guardarResultado(resultado) {
+        var userId = $('#save-button').data('user-id');
+        console.log(userId);
+        $.post('procesos/guardar_partida.php', { user_id: userId, resultado: resultado })
+            .done(function(data) {
+                // Manejar la respuesta si es necesario
+                console.log(data);
+                alert("¡Partida guardada exitosamente!");
+                location.reload(); // Recargar la página después de guardar el resultado
+            })
+            .fail(function() {
+                // Manejar cualquier error
+                console.error("Error al intentar guardar la partida");
+                alert("Error al intentar guardar la partida. Por favor, inténtalo de nuevo más tarde.");
+            });
+    }
     // Agregar el evento click a todas las celdas del tablero
     board.addEventListener('click', eventoCelda);
 });
