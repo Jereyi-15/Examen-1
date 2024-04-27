@@ -1,13 +1,14 @@
 <?php
-
-
-if(!isset($_SESSION['verificar'])) {
-    header("Location: index.php");
-    exit;
-}
-
-?>
-
+          
+          if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+           }
+           if (!isset($_SESSION['verificar']) || !$_SESSION['verificar']) {
+            // Si no está autenticado, redirigirlo a la página de inicio de sesión
+            header("Location: index.php");
+            exit;
+        }
+        ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -45,7 +46,6 @@ if(!isset($_SESSION['verificar'])) {
     <table id="Tablero"></table>
     <button id="save-button" data-user-id="<?php echo isset($_SESSION['id']) ? $_SESSION['id'] : 'null'; ?>" onclick="guardarResultado()"></button>
     <div id="turno">Turno del jugador: Rojo</div>
-    </div>
-    
+    </div>    
 </body>
 </html>
