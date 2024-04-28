@@ -57,6 +57,10 @@ $(document).ready(function() {
         $('#result-message').empty(); // Limpiar el mensaje de resultado
     }
 
+    $('#reset-button').on('click', function() {
+        reiniciarJuego(); // Llamar a la función reiniciarJuego cuando se hace clic en el botón
+    });
+    
     // Manejar el clic en una celda del tablero
     $('#game-board').on('click', '.cell', function() {
         let index = $(this).index();
