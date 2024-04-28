@@ -88,11 +88,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 termino = true;
                 if(jugadorActual===1){
                     alert(`¡Jugador ${jugadorActual} ha ganado!`);
-                    guardarResultado('ganada');
+                    guardarResultado('ganadaCuatroEnLinea');
                    
                 }else{
                     alert(`¡Jugador ${jugadorActual} ha ganado!`);
-                    guardarResultado('perdida');
+                    guardarResultado('perdidaCuatroEnLinea');
                    
                 }
                 
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (tableroLleno()) {
                     termino = true;
                     alert("¡El juego terminó en empate!");
-                    guardarResultado('empate');
+                    guardarResultado('empateCuatroEnLinea');
                 } else {
                     jugadorActual = jugadorActual === 1 ? 2 : 1;
                     actualizarTurnoDisplay();

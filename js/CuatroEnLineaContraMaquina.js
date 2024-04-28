@@ -97,18 +97,18 @@ document.addEventListener('DOMContentLoaded', () => {
                if(jugadorActual===1){
                 termino = true;
                 alert(`¡Jugador ${jugadorActual} ha ganado!`);
-                guardarResultado('ganada');
+                guardarResultado('ganadaCuatroEnLinea');
                }else{
                 termino = true;
                 alert(`¡Jugador ${jugadorActual} ha ganado!`);
-                guardarResultado('perdida');
+                guardarResultado('perdidaCuatroEnLinea');
                }
 
             } else {
                 if (tableroLleno()) {
                     termino = true;
                     alert("¡El juego terminó en empate!");
-                    guardarResultado('empate');
+                    guardarResultado('empatadaCuatroEnLinea');
                 } else {
                     actualizarTurnoDisplay();
                     jugadorActual = jugadorActual === 1 ? 2 : 1; // Cambiar al siguiente jugador mediante este if raro
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (tableroLleno()) {
                 termino = true;
                 alert("¡El juego terminó en empate!");
-                guardarResultado('empate');
+                guardarResultado('empatadaCuatroEnLinea');
             } else {
                 jugadorActual = 1;
                 actualizarTurnoDisplay();
